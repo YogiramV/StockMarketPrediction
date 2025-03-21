@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request
-from predictor import Predictor
+from predictor import predict
+from datetime import datetime
+
 app = Flask(__name__)
 
 
@@ -8,21 +10,27 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/predict', methods=['POST'])
-def predict():
+@app.route('/forecast', methods=['POST'])
+def forecast():
+    try:
+        # Get user input from the form
+        company = request.form['company']
+        predict_date = request.form['predict_date']
 
-    prediction_date = request.form['date']
-    start_date = request.form['start_date']
-    end_date = request.form['end_date']
-    if start_date > end_date:
-        return render_template('prediction_result.html', prediction_result="Error: Start date cannot be after end date.")
-    model = Predictor('AAPL', start_date, end_date)
-    prediction = model.predict(prediction_date)
-    prediction_result = (
-        f"Stock price prediction for {prediction_date}  is {prediction[0][0]}"
-    )
-    return render_template('prediction_result.html', prediction_result=prediction_result)
+        # Call the predict function from predictor.py
+        forecast = predict(company, predict_date)
+
+        # Render the prediction result page and pass the forecast data
+        formatted_date = datetime.strptime(
+            predict_date, '%Y-%m-%d').strftime('%d-%m-%Y')
+        return render_template('prediction.html',
+                               company=company,
+                               predict_date=formatted_date,
+                               forecast=forecast)
+
+    except Exception as e:
+        return f"Error: {str(e)}", 400
 
 
-def main():
+if __name__ == '__main__':
     app.run(debug=True)
