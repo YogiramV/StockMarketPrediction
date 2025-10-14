@@ -7,16 +7,15 @@ from datetime import timedelta
 
 def prepare_data(data, company):
     # Create lag features (previous day price)
-    data['Lag1'] = data['Close_'+company].shift(1)
-    data['Lag2'] = data['Close_'+company].shift(2)
-    data['Lag3'] = data['Close_'+company].shift(3)
+    for i in range(0,30):
+        data['Lag'+str(i+1)] = data['Close_'+company].shift(i+1)
 
     # Create rolling mean (7-day moving average)
     data['Rolling7'] = data['Close_'+company].rolling(window=7).mean()
 
     # Remove missing values created by lag and rolling mean
     data = data.dropna()
-
+    print(data)
     return data
 
 
