@@ -1,0 +1,5 @@
+Linear models:
+    Linear regression : 0.0000 (Overfit)
+    Ridge regression : 0.0039
+    Lasso regression : 1.1587
+    ElasticNet with CV : 1.1513
