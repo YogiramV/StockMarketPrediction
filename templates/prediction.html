@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Price Forecast</title>
+</head>
+
+<body style="font-family: Arial, sans-serif; background-color: #f7f7f7; color: #333; margin: 0; padding: 20px; text-align: center;">
+    <div style="max-width: 600px; margin: auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);">
+        <h1>📈 Stock Price Forecast for <span style="color: #e74c3c;">{{ company }}</span></h1>
+        <h2>💰 Predicted Prices until {{ predict_date }}:</h2>
+
+        <div style="margin-top: 20px;">
+            {% if forecast_data %}
+                <ul style="list-style: none; padding: 0;">
+                    {% for forecast in forecast_data %}
+                        <li style="margin: 10px 0; font-size: 18px;">
+                            <strong>{{ forecast.date }}:</strong> ${{ forecast.price }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No forecast data available.</p>
+            {% endif %}
+        </div>
+
+        <div style="margin-top: 30px;">
+            <a href="/" style="display: inline-block; padding: 12px 24px; background-color: #3498db; color: white; text-decoration: none; border-radius: 4px; font-size: 16px;">⬅ Go Back</a>
+        </div>
+    </div>
+</body>
+
+</html>

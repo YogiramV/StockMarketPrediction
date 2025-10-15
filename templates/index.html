@@ -1,106 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stock Market Prediction</title>
+    <title>Stock Price Forecast</title>
     <style>
+        /* General Styles */
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #e8f4f8;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #4b7bec, #a29bfe);
+            margin: 0;
+            padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            margin: 0;
+            color: #fff;
         }
 
+        /* Form Container */
         .container {
-            background-color: white;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 550px;
+            background: #ffffff;
+            padding: 3rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            max-width: 450px;
             text-align: center;
+            transition: transform 0.3s ease;
         }
 
+        .container:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Heading */
         h1 {
-            font-size: 28px;
-            color: #333;
-            margin-bottom: 25px;
+            font-size: 2.3rem;
+            color: #2d3436;
+            margin-bottom: 1.5rem;
         }
 
+        /* Form Labels */
         label {
-            font-size: 18px;
-            margin-bottom: 12px;
+            font-size: 1.1rem;
+            color: #2d3436;
             display: block;
-            color: #555;
+            text-align: left;
+            font-weight: 600;
+            margin-bottom: 8px;
         }
 
+        /* Input Fields */
+        input[type="text"],
         input[type="date"] {
             width: 100%;
             padding: 12px;
-            margin: 12px 0;
-            border: 1px solid #ccc;
+            margin-bottom: 1.5rem;
+            border: 2px solid #dfe6e9;
             border-radius: 8px;
-            font-size: 16px;
-            background-color: #f9f9f9;
+            font-size: 1rem;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.3s ease;
         }
 
+        input[type="text"]:focus,
         input[type="date"]:focus {
-            border-color: #4CAF50;
-            background-color: #fff;
+            border-color: #4b7bec;
         }
 
+        /* Submit Button */
         button {
-            background-color: #4CAF50;
+            background: #0984e3;
             color: white;
+            padding: 12px;
             border: none;
-            padding: 15px 0;
-            font-size: 18px;
-            cursor: pointer;
             border-radius: 8px;
+            font-size: 1.2rem;
+            cursor: pointer;
             width: 100%;
-            margin-top: 20px;
+            transition: background 0.3s ease;
         }
 
         button:hover {
-            background-color: #45a049;
+            background: #74b9ff;
         }
 
-        .error-message {
-            color: red;
-            font-size: 14px;
-            margin-top: 12px;
+        /* Footer */
+        .footer {
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            color: #636e72;
         }
 
-        .note {
-            font-size: 14px;
-            color: #777;
-            margin-top: 15px;
+        .footer a {
+            color: #0984e3;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Link Style near Company Symbol */
+        .symbol-link {
+            font-size: 0.9rem;
+            color: #0984e3;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 2px;
+        }
+
+        .symbol-link:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
+
 <body>
+    <div class="container">
+        <h1>📊 Stock Price Forecast</h1>
+        <form action="/forecast" method="POST">
+            <label for="company">📌 Company Symbol:</label>
+            <input type="text" id="company" name="company" placeholder="e.g., AAPL" required style="margin-bottom: 3px;">
+            <!-- Link to stock analysis for company symbols -->
+            <a href="https://stockanalysis.com/stocks/" target="_blank" class="symbol-link">Refer to Company Symbols</a>
 
-<div class="container">
-    <h1>Stock Market Prediction</h1>
-    <form action="{{ url_for('predict') }}" method="POST">
-        <label for="date">Enter Date for Prediction (up to today):</label>
-        <input type="date" id="date" name="date" max="{{ today }}" required>
+            <label for="predict_date">📅 Predict Date:</label>
+            <input type="date" id="predict_date" name="predict_date" required>
 
-        <label for="start_date">Start Date for Training:</label>
-        <input type="date" id="start_date" name="start_date" max="{{ today }}" required>
-
-        <label for="end_date">End Date for Training:</label>
-        <input type="date" id="end_date" name="end_date" max="{{ today }}" required>
-
-        <button type="submit">Predict Sales</button>
-        
-        <p class="note">Make sure the dates are within a valid range!</p>
-    </form>
-</div>
-
+            <button type="submit">🔮 Get Forecast</button>
+        </form>
+    </div>
 </body>
+
 </html>
