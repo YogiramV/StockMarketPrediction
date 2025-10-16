@@ -3,3 +3,5 @@ Linear models:
     Ridge regression : 0.0039
     Lasso regression : 1.1587
     ElasticNet with CV : 1.1513
+Non-linear models:
+    Random Forest Regressor : 1158.1455 (Underfit)

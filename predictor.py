@@ -4,6 +4,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.linear_model import Ridge
 from sklearn.linear_model import Lasso
 from sklearn.linear_model import ElasticNet
+from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import TimeSeriesSplit
 from data_fetcher import DataFetcher
@@ -58,9 +59,19 @@ def predict(company, target_date):
     lasso = Lasso(alpha=0.001, max_iter=10000)  # smaller alpha = less regularization
 
     #Train ElasticNet
-    elastic_net = ElasticNet(alpha=0.0001,l1_ratio=0.7,max_iter=10000,random_state=42)'''
+    elastic_net = ElasticNet(alpha=0.0001,l1_ratio=0.7,max_iter=10000,random_state=42)
     
-    ridge = Ridge(alpha=1.0)
+    #ridge = Ridge(alpha=1.0)'''
+    
+    #Train RandomForestRegressor
+    rf = RandomForestRegressor(
+    n_estimators=500,
+    max_depth=15,
+    min_samples_split=2,
+    min_samples_leaf=1,
+    random_state=42,
+    n_jobs=-1
+    )
     
     mse_scores = []
 
@@ -68,9 +79,9 @@ def predict(company, target_date):
         X_train, X_test = X.iloc[train_index], X.iloc[test_index]
         y_train, y_test = y.iloc[train_index], y.iloc[test_index]
         
-        ridge.fit(X_train, y_train)
+        rf.fit(X_train, y_train)
 
-        y_pred = ridge.predict(X_test)
+        y_pred = rf.predict(X_test)
 
         mse = mean_squared_error(y_test, y_pred)
         mse_scores.append(mse)
@@ -104,7 +115,7 @@ def predict(company, target_date):
 
         feature_df = pd.DataFrame([feature_row])
 
-        predicted_price = ridge.predict(feature_df)[0]
+        predicted_price = rf.predict(feature_df)[0]
 
         predictions.append((predicted_date.strftime('%Y-%m-%d'), predicted_price))
 
